@@ -1,0 +1,150 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:liferay-ui="http://liferay.com/faces/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<title></title>
+</h:head>
+<h:body>
+
+	<f:view>
+
+		<p:tabView id="tabView">
+
+			<p:tab id="tabView1" title="#{i18n['be.spiker.portlet.mail.tab.mail']}">
+
+				<h:form id="mailForm">
+
+					<p:growl id="growl" showDetail="true" sticky="false" />
+
+					<h:panelGrid id="mailFormGrid" columns="4" cellpadding="5" styleClass="mailFormGrid">
+
+						<h:outputLabel value="#{i18n['be.spiker.portlet.community.mail']} *" style="font-weight:bold" />
+						<p:inputText immediate="true" id="name" value="#{mailBean.title}" required="true" requiredMessage="#{i18n['be.spiker.portlet.community.mail.required']}" />
+
+						<h:outputLabel value="#{i18n['be.spiker.portlet.community.mail.decription']} *" style="font-weight:bold" />
+						<p:editor immediate="true" id="editor" value="#{mailBean.comment}" style="width:100%" />
+
+						<h:outputLabel value="#{i18n['be.spiker.portlet.community.sender']} *" style="font-weight:bold" />
+						<p:inputText immediate="true" id="sender" value="#{mailBean.mail}" required="true" requiredMessage="#{i18n['be.spiker.portlet.community.sender.required']}" />
+
+					</h:panelGrid>
+
+					<p:dialog header="#{i18n['be.spiker.portlet.actions.report.title']}" widgetVar="mailDialog" styleClass="mailDialog" modal="true" width="400">
+
+						<h:panelGrid columns="2" cellpadding="5">
+							<h:outputLabel value="#{i18n['be.spiker.portlet.actions.report.title.value']}" />
+							<p:inputText value="#{mailBean.templateTitle}" />
+						</h:panelGrid>
+
+						<p:commandButton value="#{i18n['be.spiker.portlet.save']}" ajax="true" actionListener="#{mailBean.saveTemplate}" oncomplete="mailDialog.hide();" update=":tabView:mailForm:mailFormGrid,:tabView:templateForm" />
+						<p:commandButton value="#{i18n['be.spiker.portlet.close']}" ajax="true" oncomplete="mailDialog.hide()" />
+
+					</p:dialog>
+
+					<p:tabView id="tabView">
+
+						<p:tab id="tab1" title="#{i18n['be.spiker.portlet.user']}">
+
+							<p:dataTable id="dataTableUser" styleClass="dataTableUser" var="user" value="#{mailBean.users}" paginator="true" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,50,100" selection="#{mailBean.selectedUsers}">
+
+								<p:column selectionMode="multiple" />
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{i18n['be.spiker.portlet.name']}" />
+									</f:facet>
+									<h:outputText value="#{user.name}" />
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{i18n['be.spiker.portlet.name.screen']}" />
+									</f:facet>
+									<h:outputText value="#{user.screename}" />
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{i18n['be.spiker.portlet.roles']}" />
+									</f:facet>
+									<h:outputText value="#{user.roles}" />
+								</p:column>
+
+							</p:dataTable>
+
+						</p:tab>
+
+						<p:tab id="tab2" title="#{i18n['be.spiker.portlet.communities']}">
+
+							<p:tree value="#{mailBean.root}" var="node" selectionMode="checkbox" selection="#{mailBean.selectedNodes}" style="width:100%;">
+								<p:treeNode>
+									<h:outputText value="#{node.name}" />
+								</p:treeNode>
+							</p:tree>
+
+						</p:tab>
+
+
+						<p:tab title="#{i18n['be.spiker.portlet.user.groups']}">
+
+							<p:dataTable styleClass="dataTableGroup" var="group" value="#{mailBean.groups}" paginator="true" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,50,100" selection="#{mailBean.selectedGroups}">
+								<p:column selectionMode="multiple" />
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{i18n['be.spiker.portlet.name']}" />
+									</f:facet>
+									<h:outputText value="#{group.name}" />
+								</p:column>
+
+							</p:dataTable>
+
+						</p:tab>
+
+					</p:tabView>
+
+					<p:panel styleClass="mail-buttons">
+						<p:commandButton widgetVar="button0" value="#{i18n['be.spiker.portlet.save.template']}" onclick="mailDialog.show();" ajax="true" />
+						<p:commandButton widgetVar="button1" value="#{i18n['be.spiker.portlet.actions.report.mail']}" ajax="true" actionListener="#{mailBean.sendMail}" update="growl" />
+						<p:commandButton widgetVar="button2" value="#{i18n['be.spiker.portlet.actions.report.reset']}" ajax="true" actionListener="#{mailBean.reset}" update=":tabView" />
+					</p:panel>
+
+				</h:form>
+
+			</p:tab>
+
+			<p:tab title="#{i18n['be.spiker.portlet.mail.tab.template']}">
+
+				<h:form id="templateForm">
+
+					<p:dataTable var="template" value="#{mailBean.templates}" rowKey="#{template.id}" selection="#{mailBean.selectedTemplate}" selectionMode="single">
+
+						<p:ajax event="rowSelect" update=":tabView:mailForm:mailFormGrid"></p:ajax>
+
+						<p:column headerText="#{i18n['be.spiker.portlet.community.mail.name']}">
+							<h:outputText value="#{template.name}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['be.spiker.portlet.community.mail']}">
+							<h:outputText value="#{template.title}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['be.spiker.portlet.community.sender']}">
+							<h:outputText value="#{template.sender}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['be.spiker.portlet.community.options']}">
+							<p:commandButton ajax="true" icon="ui-icon-close" actionListener="#{mailBean.deleteTemplate(template.id)}" update=":tabView:templateForm" />
+						</p:column>
+
+
+					</p:dataTable>
+
+				</h:form>
+
+			</p:tab>
+
+		</p:tabView>
+	</f:view>
+
+</h:body>
+</html>

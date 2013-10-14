@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE plugin-package PUBLIC "-//Liferay//DTD Plugin Package 6.1.0//EN" "http://www.liferay.com/dtd/liferay-plugin-package_6_1_0.dtd">
+
+<plugin-package>
+     <name>Mail Client portlet</name>
+     <module-id>liferay/mail-client/1.0/war</module-id>
+     <types>
+          <type>web</type>
+     </types>
+     <tags></tags>
+     <short-description>Mail Client Portlet for Liferay</short-description>
+     <long-description></long-description>
+     <change-log></change-log>
+     <page-url>http://www.tommahy.com</page-url>
+     <author>Tom Mahy</author>
+     <licenses>
+          <license osi-approved="true">GPLV2</license>
+     </licenses>
+     <liferay-versions>
+          <liferay-version>6.1.0+</liferay-version>
+     </liferay-versions>
+</plugin-package>
