@@ -1,20 +1,36 @@
 package be.spiker.model;
 
 import java.io.Serializable;
+import java.util.List;
 
+import com.liferay.portal.model.Role;
 
-public class DataUser implements Serializable{
+public class DataUser implements Serializable {
 
-	Long id;
-	String name;
-	String screename;
-	String roles;
+	private Long id;
+	private String name;
+	private String screename;
+	private String email;
+	private List<Role> roles;
 
-	public DataUser(Long id, String name, String screename, String roles) {
+	public DataUser() {
+
+	}
+
+	public DataUser(Long id, String name, String screename, String email, List<Role> roles) {
 		this.id = id;
 		this.name = name;
 		this.screename = screename;
 		this.roles = roles;
+		this.email = email;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public Long getId() {
@@ -41,11 +57,11 @@ public class DataUser implements Serializable{
 		this.screename = screename;
 	}
 
-	public String getRoles() {
+	public List<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(String roles) {
+	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
 

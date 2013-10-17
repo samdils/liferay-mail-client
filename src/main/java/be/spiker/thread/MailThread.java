@@ -105,8 +105,8 @@ public class MailThread implements Runnable {
 			for (String mail : emails) {
 				try {
 					sLog.error("sending mail to : " + mail + " sender : " + sender + " subject : " + subject);
-					message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mail, false));
-					Transport.send(message);
+//					message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mail, false));
+//					Transport.send(message);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

@@ -42,40 +42,66 @@
 
 					<p:tabView id="tabView">
 
-						<p:tab id="tab1" title="#{i18n['be.spiker.portlet.user']}">
+						<p:tab title="#{i18n['be.spiker.portlet.user']}">
 
-							<p:dataTable id="dataTableUser" styleClass="dataTableUser" var="user" value="#{mailBean.users}" paginator="true" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,50,100" selection="#{mailBean.selectedUsers}">
+							<p:dataTable lazy="true" id="dataTableUser" styleClass="dataTableUser" var="user" value="#{mailBean.users}" paginator="true" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,50,100" selection="#{mailBean.selectedUsers}">
 
 								<p:column selectionMode="multiple" />
 
-								<p:column>
+								<p:column sortBy="name" filterBy="#{user.name}">
 									<f:facet name="header">
 										<h:outputText value="#{i18n['be.spiker.portlet.name']}" />
 									</f:facet>
 									<h:outputText value="#{user.name}" />
 								</p:column>
 
-								<p:column>
+								<p:column sortBy="screenname" filterBy="#{user.screename}">
 									<f:facet name="header">
-										<h:outputText value="#{i18n['be.spiker.portlet.name.screen']}" />
+										<h:outputText value="#{i18n['be.spiker.portlet.screen']}" />
 									</f:facet>
 									<h:outputText value="#{user.screename}" />
 								</p:column>
 
-								<p:column>
+								<p:column sortBy="email" filterBy="#{user.email}">
+									<f:facet name="header">
+										<h:outputText value="#{i18n['be.spiker.portlet.email']}" />
+									</f:facet>
+									<h:outputText value="#{user.email}" />
+								</p:column>
+
+								<p:column filterBy="#{user.roles}">
 									<f:facet name="header">
 										<h:outputText value="#{i18n['be.spiker.portlet.roles']}" />
 									</f:facet>
-									<h:outputText value="#{user.roles}" />
+									<ui:repeat value="#{user.roles}" var="role">
+										<h:outputText value="#{role.name}" />
+										<br></br>
+									</ui:repeat>
 								</p:column>
 
 							</p:dataTable>
 
 						</p:tab>
 
-						<p:tab id="tab2" title="#{i18n['be.spiker.portlet.communities']}">
+						<p:tab title="#{i18n['be.spiker.portlet.site']}">
 
-							<p:tree value="#{mailBean.root}" var="node" selectionMode="checkbox" selection="#{mailBean.selectedNodes}" style="width:100%;">
+							<p:dataTable lazy="true" styleClass="dataTableGroup" var="site" value="#{mailBean.sites}" paginator="true" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,50,100" selection="#{mailBean.selectedSites}">
+								<p:column selectionMode="multiple" />
+
+								<p:column sortBy="name" filterBy="#{site.name}">
+									<f:facet name="header">
+										<h:outputText value="#{i18n['be.spiker.portlet.site.name']}" />
+									</f:facet>
+									<h:outputText value="#{site.name}" />
+								</p:column>
+
+							</p:dataTable>
+
+						</p:tab>
+
+						<p:tab title="#{i18n['be.spiker.portlet.communities']}">
+
+							<p:tree value="#{mailBean.organizations}" var="node" selectionMode="checkbox" selection="#{mailBean.selectedNodes}" style="width:100%;">
 								<p:treeNode>
 									<h:outputText value="#{node.name}" />
 								</p:treeNode>
@@ -86,10 +112,10 @@
 
 						<p:tab title="#{i18n['be.spiker.portlet.user.groups']}">
 
-							<p:dataTable styleClass="dataTableGroup" var="group" value="#{mailBean.groups}" paginator="true" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,50,100" selection="#{mailBean.selectedGroups}">
+							<p:dataTable lazy="true" styleClass="dataTableGroup" var="group" value="#{mailBean.groups}" paginator="true" rows="10" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,50,100" selection="#{mailBean.selectedGroups}">
 								<p:column selectionMode="multiple" />
 
-								<p:column>
+								<p:column sortBy="name" filterBy="#{group.name}">
 									<f:facet name="header">
 										<h:outputText value="#{i18n['be.spiker.portlet.name']}" />
 									</f:facet>
@@ -104,7 +130,7 @@
 
 					<p:panel styleClass="mail-buttons">
 						<p:commandButton widgetVar="button0" value="#{i18n['be.spiker.portlet.save.template']}" onclick="mailDialog.show();" ajax="true" />
-						<p:commandButton widgetVar="button1" value="#{i18n['be.spiker.portlet.actions.report.mail']}" ajax="true" actionListener="#{mailBean.sendMail}" update="growl" />
+						<p:commandButton widgetVar="button1" value="#{i18n['be.spiker.portlet.actions.report.mail']}" ajax="true" actionListener="#{mailBean.sendMail}" update="@form,growl" />
 						<p:commandButton widgetVar="button2" value="#{i18n['be.spiker.portlet.actions.report.reset']}" ajax="true" actionListener="#{mailBean.reset}" update=":tabView" />
 					</p:panel>
 

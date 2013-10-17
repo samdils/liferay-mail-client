@@ -5,6 +5,10 @@
 	margin-bottom: 5px;
 }
 
+.mail-buttons {
+	margin-top: 10px;
+}
+
 .ui-tabs-panels .mailFormGrid input {
 	width: 30%;
 }
