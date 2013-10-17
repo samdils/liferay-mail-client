@@ -18,12 +18,6 @@
      <repositories>
 
           <repository>
-               <id>toms-repository</id>
-               <name>Toms repository</name>
-               <url>http://dns.tommahy.com:8081/nexus/content/repositories/home.nexus/</url>
-          </repository>
-
-          <repository>
                <id>prime-repo</id>
                <name>PrimeFaces Maven Repository</name>
                <url>http://repository.primefaces.org</url>
@@ -100,30 +94,6 @@
                <groupId>javax.servlet</groupId>
                <artifactId>jstl</artifactId>
                <version>1.2</version>
-          </dependency>
-
-          <dependency>
-               <groupId>com.liferay.faces</groupId>
-               <artifactId>liferay-faces-portal</artifactId>
-               <version>${liferay-jsf-bridge}</version>
-          </dependency>
-
-          <dependency>
-               <groupId>com.liferay.faces</groupId>
-               <artifactId>liferay-faces-bridge-impl</artifactId>
-               <version>${liferay-jsf-bridge}</version>
-          </dependency>
-
-          <dependency>
-               <groupId>com.liferay.faces</groupId>
-               <artifactId>liferay-faces-bridge-api</artifactId>
-               <version>${liferay-jsf-bridge}</version>
-          </dependency>
-
-          <dependency>
-               <groupId>com.liferay.faces</groupId>
-               <artifactId>liferay-faces-util</artifactId>
-               <version>${liferay-jsf-bridge}</version>
           </dependency>
 
           <dependency>
@@ -228,5 +198,40 @@
                <artifactId>spring-web</artifactId>
                <version>${spring.version}</version>
           </dependency>
+          
+          <!-- Locale dependencies -->
+
+          <dependency>
+               <groupId>com.liferay.faces</groupId>
+               <artifactId>liferay-faces-portal</artifactId>
+               <version>${liferay-jsf-bridge}</version>
+               <scope>system</scope>
+               <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/liferay-faces-portal-3.1.0-rc2.jar</systemPath>
+          </dependency>
+
+          <dependency>
+               <groupId>com.liferay.faces</groupId>
+               <artifactId>liferay-faces-bridge-impl</artifactId>
+               <version>${liferay-jsf-bridge}</version>
+               <scope>system</scope>
+               <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/liferay-faces-bridge-impl-3.1.0-rc2.jar</systemPath>
+          </dependency>
+
+          <dependency>
+               <groupId>com.liferay.faces</groupId>
+               <artifactId>liferay-faces-bridge-api</artifactId>
+               <version>${liferay-jsf-bridge}</version>
+               <scope>system</scope>
+               <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/liferay-faces-bridge-api-3.1.0-rc2.jar</systemPath>
+          </dependency>
+
+          <dependency>
+               <groupId>com.liferay.faces</groupId>
+               <artifactId>liferay-faces-util</artifactId>
+               <version>${liferay-jsf-bridge}</version>
+               <scope>system</scope>
+               <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/liferay-faces-util-3.1.0-rc2.jar</systemPath>
+          </dependency>
+
      </dependencies>
 </project>
